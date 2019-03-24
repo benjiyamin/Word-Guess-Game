@@ -54,7 +54,7 @@
     //"use strict";
 
     var wins = 0,
-      totalGuesses = 13
+      totalGuesses = 8
 
     game.start(availableWords, totalGuesses)
 
@@ -102,14 +102,12 @@
         subText.textContent = 'Press any key to guess a letter.'
       } else if (game.won()) {
         // Messages when game won
-        //updateWord()
         messageText.textContent = 'Congrats! You won this round.'
         subText.textContent = 'Press any key to start a new game.'
       } else if (game.lost()) {
         // Message when game lost
         messageText.textContent = 'Sorry.. You lost this time. Try again!'
         subText.textContent = 'Press any key to start a new game.'
-        //remainingText.textContent = 0
       }
     }
 
@@ -124,7 +122,6 @@
         game.start(availableWords, totalGuesses)
       }
       updateDisplay()
-
     };
 
     updateDisplay()

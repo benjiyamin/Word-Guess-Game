@@ -14,20 +14,32 @@ var game = {
     if (!this.letterPicked(x) && isLetter(x) && !this.gameOver()) {
       this.guesses.push(x);
     }
-    console.log('Displayed: ' + this.displayed());
-    console.log('Remaining Guesses: ' + this.remainingGuesses());
+    //console.log('Displayed: ' + this.displayed());
+    //console.log('Remaining Guesses: ' + this.remainingGuesses());
   },
 
   letterIsValid: function (x) {
+    // Letter within word
     return this.letters.indexOf(x) !== -1;
   },
 
   letterPicked: function (x) {
+    // Letter has been picked
     return this.guesses.indexOf(x) !== -1;
   },
 
+  validGuesses: function() {
+    let output = [];
+    this.guesses.forEach(guess => {
+      if (this.letters.indexOf(guess) !== -1) {
+        output.push(guess)
+      }
+    });
+    return output;
+  },
+
   remainingGuesses: function () {
-    return this.maxGuesses - this.guesses.length;
+    return this.maxGuesses - this.guesses.length + this.validGuesses().length;
   },
 
   displayed: function () {
@@ -49,8 +61,8 @@ var game = {
     let word = wordChoices[Math.floor(Math.random() * wordChoices.length)]
     this.letters = word.split('')
     this.maxGuesses = maxGuesses
-    console.log('Reset Game')
-    console.log('Picked Word: ' + word)
+    //console.log('Reset Game')
+    //console.log('Picked Word: ' + word)
   },
 
   won: function () {
