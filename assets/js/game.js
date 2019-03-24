@@ -53,8 +53,15 @@ var game = {
     console.log('Picked Word: ' + word)
   },
 
+  won: function () {
+    return this.letters.toString() === this.displayed().toString()
+  },
+
+  lost: function () {
+    return this.remainingGuesses() <= 0 && !this.won()
+  },
+
   gameOver: function () {
-    return this.remainingGuesses() <= 0 ||
-      this.letters === this.displayed()
+    return this.won() || this.lost()
   },
 }

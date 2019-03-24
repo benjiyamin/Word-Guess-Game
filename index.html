@@ -10,6 +10,7 @@
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="assets/css/style.css">
 </head>
 
 <body>
@@ -19,8 +20,11 @@
   </nav>
 
   <div class="jumbotron container mt-4">
-    <h2 class="display-4">Guess the word!</h2>
-    <p class="lead">Press any key to get started.</p>
+    <div id='stars'></div>
+    <div id='stars2'></div>
+    <div id='stars3'></div>
+    <h2 class="display-4" id="messageText">Guess the word!</h2>
+    <p class="lead" id="subText">Press any key to get started.</p>
     <hr class="my-4">
     <h1 class="display-3 text-center">Current Word</h1>
     <h1 class="display-2 text-center" id="currentText">_ _ _ _ _</h1>
@@ -43,6 +47,7 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
   </script>
+  <script src="assets/js/words.js"></script>
   <script src="assets/js/game.js"></script>
 
   <script>
@@ -50,45 +55,60 @@
 
     var wins = 0,
       totalGuesses = 13
-    var availableWords = [
-      'alien',
-      'spaceship',
-      'planet',
-      'laser',
-      'asteroid',
-    ]
 
     game.start(availableWords, totalGuesses)
 
     var currentText = document.getElementById('currentText'),
       remainingText = document.getElementById('remainingText'),
-      guessedText = document.getElementById('guessedText')
+      guessedText = document.getElementById('guessedText'),
+      messageText = document.getElementById('messageText'),
+      subText = document.getElementById('subText')
     var displayWord,
       displayLetter,
       guessedString
 
     function updateDisplay() {
-      // Update displayed word
-      displayWord = ''
-      game.displayed().forEach(letter => {
-        if (letter == undefined) {
-          displayLetter = ' _'
-        } else {
-          displayLetter = ' ' + letter.toUpperCase()
-        }
-        displayWord += displayLetter
-      });
-      currentText.textContent = displayWord
 
-      // Update remaining Guesses
-      remainingText.textContent = game.remainingGuesses()
+      function updateWord() {
+        displayWord = ''
+        game.displayed().forEach(letter => {
+          if (letter == undefined) {
+            displayLetter = ' _'
+          } else {
+            displayLetter = ' ' + letter.toUpperCase()
+          }
+          displayWord += displayLetter
+        });
+        currentText.textContent = displayWord
+      }
 
-      // Update guessed letters
-      guessedString = ''
-      game.guesses.forEach(guess => {
-        guessedString += ' ' + guess.toUpperCase()
-      });
-      guessedText.textContent = guessedString
+      if (!game.gameOver()) {
+        messageText.textContent = 'Guess the word!'
+        subText.textContent = 'Press any key to guess a letter.'
+
+        // Update displayed word
+        updateWord()
+
+        // Update remaining Guesses
+        remainingText.textContent = game.remainingGuesses()
+
+        // Update guessed letters
+        guessedString = ''
+        game.guesses.forEach(guess => {
+          guessedString += ' ' + guess.toUpperCase()
+        });
+        guessedText.textContent = guessedString
+
+      } else if (game.won()) {
+        // Game over
+        updateWord()
+        messageText.textContent = 'Congrats! You won this round'
+        subText.textContent = 'Press any key to start a new game.'
+      } else if (game.lost()) {
+        messageText.textContent = 'Sorry.. You lost this time. Try again!'
+        subText.textContent = 'Press any key to start a new game.'
+        remainingText.textContent = 0
+      }
     }
 
     // This function is run whenever the user presses a key.
@@ -96,8 +116,11 @@
 
       // Determines which key was pressed.
       var userKey = event.key;
-
-      game.guess(userKey)
+      if (!game.gameOver()) {
+        game.guess(userKey)
+      } else {
+        game.start(availableWords, totalGuesses)
+      }
       updateDisplay()
 
     };
