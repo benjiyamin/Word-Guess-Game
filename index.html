@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>Title</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body>
+
+  <nav class="navbar navbar-dark bg-dark">
+    <span class="navbar-brand mb-0 h1">Word Game</span>
+  </nav>
+
+  <div class="jumbotron container mt-4">
+    <h2 class="display-4">Guess the word!</h2>
+    <p class="lead">Press any key to get started.</p>
+    <hr class="my-4">
+    <h1 class="display-3 text-center">Current Word</h1>
+    <h1 class="display-2 text-center" id="currentText">_ _ _ _ _</h1>
+    <hr class="my-4">
+    <h3 class="display-6 text-center">Remaining Guesses</h3>
+    <h3 class="display-6 text-center" id="remainingText">13</h3>
+    <hr class="my-4">
+    <h3 class="display-6 text-center">Letters Guessed</h3>
+    <h3 class="display-6 text-center" id="guessedText">R, F, Y</h3>
+  </div>
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+  </script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+  </script>
+  <script src="assets/js/game.js"></script>
+
+  <script>
+    //"use strict";
+
+    var wins = 0,
+      totalGuesses = 13
+    var availableWords = [
+      'alien',
+      'spaceship',
+      'planet',
+      'laser',
+      'asteroid',
+    ]
+
+    game.start(availableWords, totalGuesses)
+
+    var currentText = document.getElementById('currentText'),
+      remainingText = document.getElementById('remainingText'),
+      guessedText = document.getElementById('guessedText')
+    var displayWord,
+      displayLetter,
+      guessedString
+
+    function updateDisplay() {
+      // Update displayed word
+      displayWord = ''
+      game.displayed().forEach(letter => {
+        if (letter == undefined) {
+          displayLetter = ' _'
+        } else {
+          displayLetter = ' ' + letter.toUpperCase()
+        }
+        displayWord += displayLetter
+      });
+      currentText.textContent = displayWord
+
+      // Update remaining Guesses
+      remainingText.textContent = game.remainingGuesses()
+
+      // Update guessed letters
+      guessedString = ''
+      game.guesses.forEach(guess => {
+        guessedString += ' ' + guess.toUpperCase()
+      });
+      guessedText.textContent = guessedString
+    }
+
+    // This function is run whenever the user presses a key.
+    document.onkeyup = function (event) {
+
+      // Determines which key was pressed.
+      var userKey = event.key;
+
+      game.guess(userKey)
+      updateDisplay()
+
+    };
+
+    updateDisplay()
+  </script>
+</body>
+
+</html>
