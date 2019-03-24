@@ -82,32 +82,34 @@
         currentText.textContent = displayWord
       }
 
+      // Update displayed word
+      updateWord()
+
+      // Update remaining Guesses
+      remainingText.textContent = game.remainingGuesses()
+
+      // Update guessed letters
+      guessedString = ''
+      game.guesses.forEach(guess => {
+        guessedString += ' ' + guess.toUpperCase()
+      });
+      guessedText.textContent = guessedString
+
+      // Status Messages
       if (!game.gameOver()) {
+        // Messages when game in progress
         messageText.textContent = 'Guess the word!'
         subText.textContent = 'Press any key to guess a letter.'
-
-        // Update displayed word
-        updateWord()
-
-        // Update remaining Guesses
-        remainingText.textContent = game.remainingGuesses()
-
-        // Update guessed letters
-        guessedString = ''
-        game.guesses.forEach(guess => {
-          guessedString += ' ' + guess.toUpperCase()
-        });
-        guessedText.textContent = guessedString
-
       } else if (game.won()) {
-        // Game over
-        updateWord()
-        messageText.textContent = 'Congrats! You won this round'
+        // Messages when game won
+        //updateWord()
+        messageText.textContent = 'Congrats! You won this round.'
         subText.textContent = 'Press any key to start a new game.'
       } else if (game.lost()) {
+        // Message when game lost
         messageText.textContent = 'Sorry.. You lost this time. Try again!'
         subText.textContent = 'Press any key to start a new game.'
-        remainingText.textContent = 0
+        //remainingText.textContent = 0
       }
     }
 
