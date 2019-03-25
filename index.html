@@ -20,20 +20,42 @@
   </nav>
 
   <div class="jumbotron container mt-4">
-    <div id='stars'></div>
-    <div id='stars2'></div>
-    <div id='stars3'></div>
     <h2 class="display-4" id="messageText">Guess the word!</h2>
     <p class="lead" id="subText">Press any key to get started.</p>
     <hr class="my-4">
     <h1 class="display-3 text-center">Current Word</h1>
     <h1 class="display-2 text-center" id="currentText">_ _ _ _ _</h1>
     <hr class="my-4">
-    <h3 class="display-6 text-center">Remaining Guesses</h3>
-    <h3 class="display-6 text-center" id="remainingText">13</h3>
+    <div class="row">
+      <div class="col">
+        <h3 class="text-center lead">Remaining Guesses</h3>
+        <h3 class="text-center" id="remainingText">13</h3>
+      </div>
+      <div class="col">
+        <h3 class="text-center lead">Letters Guessed</h3>
+        <h3 class="text-center" id="guessedText">R, F, Y</h3>
+      </div>
+    </div>
     <hr class="my-4">
-    <h3 class="display-6 text-center">Letters Guessed</h3>
-    <h3 class="display-6 text-center" id="guessedText">R, F, Y</h3>
+    <div class="row">
+      <div class="col display-4 text-center">
+          ROUND <span id="roundText">1</span>
+      </div>
+    </div>
+    <div class="row lead">
+        <div class="col text-center">
+            <span class="pr-3"><span id="winsText">0</span> wins</span>
+            <span class="pl-3"><span id="lossesText">0</span> losses</span>
+        </div>
+      <!--
+      <div class="col text-right">
+          <span id="winsText">0</span> wins
+      </div>
+      <div class="col text-left">
+          <span id="lossesText">0</span> losses
+      </div>
+      -->
+    </div>
   </div>
 
   <!-- Optional JavaScript -->
@@ -53,16 +75,18 @@
   <script>
     //"use strict";
 
-    var wins = 0,
-      totalGuesses = 8
+    var totalGuesses = 8
 
-    game.start(availableWords, totalGuesses)
+    game.newGame(availableWords, totalGuesses)
 
     var currentText = document.getElementById('currentText'),
       remainingText = document.getElementById('remainingText'),
       guessedText = document.getElementById('guessedText'),
       messageText = document.getElementById('messageText'),
       subText = document.getElementById('subText')
+    var roundText = document.getElementById('roundText'),
+      winsText = document.getElementById('winsText'),
+      lossesText = document.getElementById('lossesText')
     var displayWord,
       displayLetter,
       guessedString
@@ -98,14 +122,19 @@
       // Status Messages
       if (!game.gameOver()) {
         // Messages when game in progress
+        if (game.guesses.length === 0) {
+          roundText.textContent = game.round()
+        }
         messageText.textContent = 'Guess the word!'
         subText.textContent = 'Press any key to guess a letter.'
       } else if (game.won()) {
         // Messages when game won
+        winsText.textContent = game.wins
         messageText.textContent = 'Congrats! You won this round.'
         subText.textContent = 'Press any key to start a new game.'
       } else if (game.lost()) {
         // Message when game lost
+        lossesText.textContent = game.losses
         messageText.textContent = 'Sorry.. You lost this time. Try again!'
         subText.textContent = 'Press any key to start a new game.'
       }
@@ -119,7 +148,7 @@
       if (!game.gameOver()) {
         game.guess(userKey)
       } else {
-        game.start(availableWords, totalGuesses)
+        game.newGame(availableWords, totalGuesses)
       }
       updateDisplay()
     };

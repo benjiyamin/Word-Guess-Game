@@ -9,10 +9,20 @@ var game = {
   letters: [],
   maxGuesses: undefined,
   guesses: [],
+  wins: 0,
+  losses: 0,
+  inProgress: true,
 
   guess: function (x) {
     if (!this.letterPicked(x) && isLetter(x) && !this.gameOver()) {
       this.guesses.push(x);
+    }
+    if (this.won() && this.inProgress) {
+      this.wins += 1
+      this.inProgress = false
+    } else if (this.lost() && this.inProgress) {
+      this.losses += 1
+      this.inProgress = false
     }
     //console.log('Displayed: ' + this.displayed());
     //console.log('Remaining Guesses: ' + this.remainingGuesses());
@@ -56,11 +66,12 @@ var game = {
     return output
   },
 
-  start: function (wordChoices, maxGuesses) {
-    this.guesses = []
+  newGame: function (wordChoices, maxGuesses) {
     let word = wordChoices[Math.floor(Math.random() * wordChoices.length)]
     this.letters = word.split('')
     this.maxGuesses = maxGuesses
+    this.guesses = []
+    this.inProgress = true
     //console.log('Reset Game')
     //console.log('Picked Word: ' + word)
   },
@@ -71,6 +82,10 @@ var game = {
 
   lost: function () {
     return this.remainingGuesses() <= 0 && !this.won()
+  },
+
+  round: function () {
+    return this.wins + this.losses + 1
   },
 
   gameOver: function () {
