@@ -1,0 +1,60 @@
+.stars,
+.twinkling,
+.clouds {
+    position: absolute;
+    display: block;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.stars {
+    z-index: -3;
+    background: #000 url("https://image.ibb.co/mjnygo/stars.png") repeat top center;
+}
+
+.twinkling {
+    z-index: -2;
+    background: transparent url("https://image.ibb.co/ir1DE8/twinkling.png") repeat top center;
+    animation: move-twink-back 200s linear infinite;
+}
+
+.clouds {
+    z-index: -1;
+    background: transparent url("https://image.ibb.co/bT4N7T/clouds.png") repeat top center;
+    animation: move-clouds-back 200s linear infinite;
+}
+
+.bg-aurora {
+    background: rgba(25, 100, 106, .7);
+    /*background: rgba(23, 35, 71, .7);*/
+    /*background: rgba(2, 83, 133, .7);*/
+}
+
+.text-aurora {
+    /*color: rgb(4, 226, 183, 0.5);*/
+    color: rgba(2, 83, 133, 0.7);
+}
+
+@keyframes move-twink-back {
+    from {
+        background-position: 0 0;
+    }
+
+    to {
+        background-position: -10000px 5000px;
+    }
+}
+
+@keyframes move-clouds-back {
+    from {
+        background-position: 0 0;
+    }
+
+    to {
+        background-position: 10000px 0;
+    }
+}

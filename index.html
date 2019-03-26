@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <title>Title</title>
+  <title>Aurora | A simple word game</title>
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -15,25 +15,29 @@
 
 <body>
 
-  <nav class="navbar navbar-dark bg-dark">
-    <span class="navbar-brand mb-0 h1">Word Game</span>
+  <nav class="navbar navbar-dark bg-aurora">
+    <span class="navbar-brand mb-0 h1">A _ R O R A</span>
   </nav>
 
-  <div class="jumbotron container mt-4 text-white bg-dark">
+  <div class='stars'></div>
+  <div class='twinkling'></div>
+  <div class='clouds'></div>
+
+  <div class="jumbotron container mt-4 text-white bg-dark bg-transparent">
     <h2 class="display-4" id="messageText">Guess the word!</h2>
     <p class="lead" id="subText">Press any key to get started.</p>
     <hr class="my-4">
     <h1 class="display-3 text-center">Current Word</h1>
-    <h1 class="display-2 text-center" id="currentText">_ _ _ _ _</h1>
+    <h1 class="display-2 text-center" id="currentText"></h1>
     <hr class="my-4">
     <div class="row">
       <div class="col">
         <h3 class="text-center lead">Remaining Guesses</h3>
-        <h3 class="text-center" id="remainingText">13</h3>
+        <h3 class="text-center" id="remainingText"></h3>
       </div>
       <div class="col">
         <h3 class="text-center lead">Letters Guessed</h3>
-        <h3 class="text-center" id="guessedText">R, F, Y</h3>
+        <h3 class="text-center" id="guessedText"></h3>
       </div>
     </div>
     <hr class="my-4">
@@ -47,14 +51,6 @@
         <span class="pr-3"><span id="winsText">0</span> wins</span>
         <span class="pl-3"><span id="lossesText">0</span> losses</span>
       </div>
-      <!--
-      <div class="col text-right">
-          <span id="winsText">0</span> wins
-      </div>
-      <div class="col text-left">
-          <span id="lossesText">0</span> losses
-      </div>
-      -->
     </div>
   </div>
 
@@ -99,10 +95,10 @@
           if (letter == undefined) {
             displayLetter = ' '
             if (reveal) {
-              displayLetter += '<span class="text-muted">'
+              displayLetter += '<span class="text-aurora">'
               displayLetter += game.letters[i].toUpperCase()
               displayLetter += '</span>'
-            } else{
+            } else {
               displayLetter += '_'
             }
           } else {
@@ -151,6 +147,8 @@
       }
     }
 
+    updateDisplay()
+
     // This function is run whenever the user presses a key.
     document.onkeyup = function (event) {
 
@@ -163,8 +161,6 @@
       }
       updateDisplay()
     };
-
-    updateDisplay()
   </script>
 </body>
 
