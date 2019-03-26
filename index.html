@@ -19,7 +19,7 @@
     <span class="navbar-brand mb-0 h1">Word Game</span>
   </nav>
 
-  <div class="jumbotron container mt-4">
+  <div class="jumbotron container mt-4 text-white bg-dark">
     <h2 class="display-4" id="messageText">Guess the word!</h2>
     <p class="lead" id="subText">Press any key to get started.</p>
     <hr class="my-4">
@@ -39,14 +39,14 @@
     <hr class="my-4">
     <div class="row">
       <div class="col display-4 text-center">
-          ROUND <span id="roundText">1</span>
+        ROUND <span id="roundText">1</span>
       </div>
     </div>
     <div class="row lead">
-        <div class="col text-center">
-            <span class="pr-3"><span id="winsText">0</span> wins</span>
-            <span class="pl-3"><span id="lossesText">0</span> losses</span>
-        </div>
+      <div class="col text-center">
+        <span class="pr-3"><span id="winsText">0</span> wins</span>
+        <span class="pl-3"><span id="lossesText">0</span> losses</span>
+      </div>
       <!--
       <div class="col text-right">
           <span id="winsText">0</span> wins
@@ -93,21 +93,32 @@
 
     function updateDisplay() {
 
-      function updateWord() {
+      function updateWord(reveal = false) {
         displayWord = ''
-        game.displayed().forEach(letter => {
+        game.displayed().forEach(function (letter, i) {
           if (letter == undefined) {
-            displayLetter = ' _'
+            displayLetter = ' '
+            if (reveal) {
+              displayLetter += '<span class="text-muted">'
+              displayLetter += game.letters[i].toUpperCase()
+              displayLetter += '</span>'
+            } else{
+              displayLetter += '_'
+            }
           } else {
             displayLetter = ' ' + letter.toUpperCase()
           }
           displayWord += displayLetter
         });
-        currentText.textContent = displayWord
+        currentText.innerHTML = displayWord
       }
 
       // Update displayed word
-      updateWord()
+      if (game.lost()) {
+        updateWord(reveal = true)
+      } else {
+        updateWord()
+      }
 
       // Update remaining Guesses
       remainingText.textContent = game.remainingGuesses()
