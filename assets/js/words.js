@@ -23,5 +23,11 @@ var availableWords = [
     'geocentric',
     'constellation',
     'aerospace',
-    'extraterrestrial'
+    'particles',
+    'radiation',
+    'ultraviolet',
+    'cosmonaut',
+    'experiment',
+    'corona',
+    'gyroscope'
 ]
