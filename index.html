@@ -95,14 +95,21 @@
           if (letter == undefined) {
             displayLetter = ' '
             if (reveal) {
-              displayLetter += '<span class="text-aurora">'
+              displayLetter += '<span class="text-aurora blink">'
               displayLetter += game.letters[i].toUpperCase()
               displayLetter += '</span>'
             } else {
               displayLetter += '_'
             }
           } else {
-            displayLetter = ' ' + letter.toUpperCase()
+            if (game.won()) {
+              displayLetter = ' ' 
+              displayLetter += '<span class="blink">'
+              displayLetter += letter.toUpperCase()
+              displayLetter += '</span>'
+            } else {
+              displayLetter = ' ' + letter.toUpperCase()
+            }
           }
           displayWord += displayLetter
         });
