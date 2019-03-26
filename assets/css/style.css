@@ -13,18 +13,18 @@
 
 .stars {
     z-index: -3;
-    background: #000 url("https://image.ibb.co/mjnygo/stars.png") repeat top center;
+    background: #000 url("../images/stars.png") repeat top center;
 }
 
 .twinkling {
     z-index: -2;
-    background: transparent url("https://image.ibb.co/ir1DE8/twinkling.png") repeat top center;
+    background: transparent url("../images/twinkling.png") repeat top center;
     animation: move-twink-back 200s linear infinite;
 }
 
 .clouds {
     z-index: -1;
-    background: transparent url("https://image.ibb.co/bT4N7T/clouds.png") repeat top center;
+    background: transparent url("../images/clouds.png") repeat top center;
     animation: move-clouds-back 200s linear infinite;
 }
 
