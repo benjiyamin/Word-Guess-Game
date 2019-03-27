@@ -30,12 +30,9 @@
 
 .bg-aurora {
     background: rgba(25, 100, 106, .7);
-    /*background: rgba(23, 35, 71, .7);*/
-    /*background: rgba(2, 83, 133, .7);*/
 }
 
 .text-aurora {
-    /*color: rgb(4, 226, 183, 0.5);*/
     color: rgba(2, 83, 133, 0.7);
 }
 

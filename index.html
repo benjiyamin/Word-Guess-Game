@@ -19,10 +19,6 @@
     <span class="navbar-brand mb-0 h1">A _ R O R A</span>
   </nav>
 
-  <div class='stars'></div>
-  <div class='twinkling'></div>
-  <div class='clouds'></div>
-
   <div class="jumbotron container mt-4 text-white bg-dark bg-transparent">
     <h2 class="display-4" id="messageText">Guess the word!</h2>
     <p class="lead" id="subText">Press any key to get started.</p>
@@ -54,6 +50,10 @@
     </div>
   </div>
 
+  <div class='stars'></div>
+  <div class='twinkling'></div>
+  <div class='clouds'></div>
+
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -67,6 +67,7 @@
   </script>
   <script src="assets/js/words.js"></script>
   <script src="assets/js/game.js"></script>
+  <script src="assets/js/controller.js"></script>
 
   <script>
     //"use strict";
@@ -75,99 +76,9 @@
 
     game.newGame(availableWords, totalGuesses)
 
-    var currentText = document.getElementById('currentText'),
-      remainingText = document.getElementById('remainingText'),
-      guessedText = document.getElementById('guessedText'),
-      messageText = document.getElementById('messageText'),
-      subText = document.getElementById('subText')
-    var roundText = document.getElementById('roundText'),
-      winsText = document.getElementById('winsText'),
-      lossesText = document.getElementById('lossesText')
-    var displayWord,
-      displayLetter,
-      guessedString
+    var controller = new Controller(model=game, view=document)
+    controller.updateDisplay()
 
-    function updateDisplay() {
-
-      function updateWord(reveal = false) {
-        displayWord = ''
-        game.displayed().forEach(function (letter, i) {
-          if (letter == undefined) {
-            displayLetter = ' '
-            if (reveal) {
-              displayLetter += '<span class="text-aurora blink">'
-              displayLetter += game.letters[i].toUpperCase()
-              displayLetter += '</span>'
-            } else {
-              displayLetter += '_'
-            }
-          } else {
-            if (game.won()) {
-              displayLetter = ' ' 
-              displayLetter += '<span class="blink">'
-              displayLetter += letter.toUpperCase()
-              displayLetter += '</span>'
-            } else {
-              displayLetter = ' ' + letter.toUpperCase()
-            }
-          }
-          displayWord += displayLetter
-        });
-        currentText.innerHTML = displayWord
-      }
-
-      // Update displayed word
-      if (game.lost()) {
-        updateWord(reveal = true)
-      } else {
-        updateWord()
-      }
-
-      // Update remaining Guesses
-      remainingText.textContent = game.remainingGuesses()
-
-      // Update guessed letters
-      guessedString = ''
-      game.guesses.forEach(guess => {
-        guessedString += ' ' + guess.toUpperCase()
-      });
-      guessedText.textContent = guessedString
-
-      // Status Messages
-      if (!game.gameOver()) {
-        // Messages when game in progress
-        if (game.guesses.length === 0) {
-          roundText.textContent = game.round()
-        }
-        messageText.textContent = 'Guess the word!'
-        subText.textContent = 'Press any key to guess a letter.'
-      } else if (game.won()) {
-        // Messages when game won
-        winsText.textContent = game.wins
-        messageText.textContent = 'Congrats! You won this round.'
-        subText.textContent = 'Press any key to start a new game.'
-      } else if (game.lost()) {
-        // Message when game lost
-        lossesText.textContent = game.losses
-        messageText.textContent = 'Sorry.. You lost this time. Try again!'
-        subText.textContent = 'Press any key to start a new game.'
-      }
-    }
-
-    updateDisplay()
-
-    // This function is run whenever the user presses a key.
-    document.onkeyup = function (event) {
-
-      // Determines which key was pressed.
-      var userKey = event.key;
-      if (!game.gameOver()) {
-        game.guess(userKey)
-      } else {
-        game.newGame(availableWords, totalGuesses)
-      }
-      updateDisplay()
-    };
   </script>
 </body>
 
