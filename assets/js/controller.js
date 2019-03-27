@@ -15,7 +15,7 @@ function Controller(model, view) {
     displayLetter,
     guessedString
 
-  this.updateDisplay = function() {
+  this.updateDisplay = function () {
 
     function updateWord(reveal = false) {
       displayWord = ''
