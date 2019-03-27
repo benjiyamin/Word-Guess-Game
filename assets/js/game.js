@@ -1,19 +1,19 @@
 "use strict";
 
 function isLetter(x) {
-  //return x.toLowerCase() != x.toUpperCase();
   return x.length === 1 && x.match(/[a-z]/i);
 }
 
-var game = {
-  letters: [],
-  maxGuesses: undefined,
-  guesses: [],
-  wins: 0,
-  losses: 0,
-  inProgress: true,
+function Game(wordChoices, maxGuesses) {
+  let word = wordChoices[Math.floor(Math.random() * wordChoices.length)]
+  this.letters = word.split('')
+  this.maxGuesses = maxGuesses
+  this.guesses = []
+  this.wins = 0
+  this.losses = 0
+  this.inProgress = true
 
-  guess: function (x) {
+  this.guess = function (x) {
     if (!this.letterPicked(x) && isLetter(x) && !this.gameOver()) {
       this.guesses.push(x);
     }
@@ -24,21 +24,17 @@ var game = {
       this.losses += 1
       this.inProgress = false
     }
-    //console.log('Displayed: ' + this.displayed());
-    //console.log('Remaining Guesses: ' + this.remainingGuesses());
-  },
+  }
 
-  letterIsValid: function (x) {
-    // Letter within word
+  this.letterIsValid = function (x) {
     return this.letters.indexOf(x) !== -1;
-  },
+  }
 
-  letterPicked: function (x) {
-    // Letter has been picked
+  this.letterPicked = function (x) {
     return this.guesses.indexOf(x) !== -1;
-  },
+  }
 
-  validGuesses: function() {
+  this.validGuesses = function() {
     let output = [];
     this.guesses.forEach(guess => {
       if (this.letters.indexOf(guess) !== -1) {
@@ -46,13 +42,13 @@ var game = {
       }
     });
     return output;
-  },
+  }
 
-  remainingGuesses: function () {
+  this.remainingGuesses = function () {
     return this.maxGuesses - this.guesses.length + this.validGuesses().length;
-  },
+  }
 
-  displayed: function () {
+  this.displayed = function () {
     let output = [];
     let letter;
     this.letters.forEach(x => {
@@ -64,31 +60,29 @@ var game = {
       output.push(letter)
     });
     return output
-  },
+  }
 
-  newGame: function (wordChoices, maxGuesses) {
+  this.newGame = function (maxGuesses) {
     let word = wordChoices[Math.floor(Math.random() * wordChoices.length)]
     this.letters = word.split('')
     this.maxGuesses = maxGuesses
     this.guesses = []
     this.inProgress = true
-    //console.log('Reset Game')
-    //console.log('Picked Word: ' + word)
-  },
+  }
 
-  won: function () {
+  this.won = function () {
     return this.letters.toString() === this.displayed().toString()
-  },
+  }
 
-  lost: function () {
+  this.lost = function () {
     return this.remainingGuesses() <= 0 && !this.won()
-  },
+  }
 
-  round: function () {
+  this.round = function () {
     return this.wins + this.losses + 1
-  },
+  }
 
-  gameOver: function () {
+  this.gameOver = function () {
     return this.won() || this.lost()
-  },
+  }
 }

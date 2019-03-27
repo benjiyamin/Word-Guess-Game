@@ -1,6 +1,4 @@
 function Controller(model, view) {
-  //this.model = model
-  //this.view = view
   var self = this
 
   var currentText = view.getElementById('currentText'),
@@ -41,7 +39,7 @@ function Controller(model, view) {
         }
         displayWord += displayLetter
       });
-      currentText.innerHTML = displayWord
+      currentText.innerHTML = displayWord.trim()
     }
 
     // Update displayed word
@@ -90,7 +88,7 @@ function Controller(model, view) {
     if (!game.gameOver()) {
       game.guess(userKey)
     } else {
-      game.newGame(availableWords, totalGuesses)
+      game.newGame(totalGuesses)
     }
     self.updateDisplay()
   };
