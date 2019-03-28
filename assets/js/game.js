@@ -34,7 +34,7 @@ function Game(wordChoices, maxGuesses) {
     return this.guesses.indexOf(x) !== -1;
   }
 
-  this.validGuesses = function() {
+  this.validGuesses = function () {
     let output = [];
     this.guesses.forEach(guess => {
       if (this.letters.indexOf(guess) !== -1) {
