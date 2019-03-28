@@ -72,11 +72,13 @@
   <script>
     //"use strict";
 
-    var totalGuesses = 8
+    $(document).ready(function () {
+      var totalGuesses = 8
+      var game = new Game(availableWords, totalGuesses)
+      var controller = new Controller(model = game, view = document)
+      controller.updateDisplay()
 
-    var game = new Game(availableWords, totalGuesses)
-    var controller = new Controller(model = game, view = document)
-    controller.updateDisplay()
+    })
   </script>
 </body>
 

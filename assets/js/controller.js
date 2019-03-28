@@ -85,10 +85,10 @@ function Controller(model, view) {
 
     // Determines which key was pressed.
     var userKey = event.key;
-    if (!game.gameOver()) {
-      game.guess(userKey)
+    if (!model.gameOver()) {
+      model.guess(userKey)
     } else {
-      game.newGame(totalGuesses)
+      model.newGame()
     }
     self.updateDisplay()
   };

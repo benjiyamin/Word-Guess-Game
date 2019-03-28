@@ -65,7 +65,9 @@ function Game(wordChoices, maxGuesses) {
   this.newGame = function (maxGuesses) {
     let word = wordChoices[Math.floor(Math.random() * wordChoices.length)]
     this.letters = word.split('')
-    this.maxGuesses = maxGuesses
+    if (maxGuesses) {
+      this.maxGuesses = maxGuesses
+    }
     this.guesses = []
     this.inProgress = true
   }
