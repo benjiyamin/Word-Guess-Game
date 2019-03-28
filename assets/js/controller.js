@@ -71,12 +71,12 @@ function Controller(model, view) {
       // Messages when model won
       winsText.textContent = model.wins
       messageText.textContent = 'Congrats! You won this round.'
-      subText.textContent = 'Press any key to start a new model.'
+      subText.textContent = 'Press any key to start a new game.'
     } else if (model.lost()) {
       // Message when model lost
       lossesText.textContent = model.losses
       messageText.textContent = 'Sorry.. You lost this time. Try again!'
-      subText.textContent = 'Press any key to start a new model.'
+      subText.textContent = 'Press any key to start a new game.'
     }
   }
 
