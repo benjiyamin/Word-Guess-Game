@@ -11,4 +11,4 @@ Good luck!
 
 ## License
 
-This project is licensed under the MIT License - see [LICENSE](LICENSE.md) for details.
+See [LICENSE](LICENSE.md) for details.
