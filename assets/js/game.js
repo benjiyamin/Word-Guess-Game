@@ -11,16 +11,16 @@ function Game(wordChoices, maxGuesses) {
   this.guesses = []
   this.wins = 0
   this.losses = 0
-  this.inProgress = true
 
   this.guess = function (x) {
+    let gameOverBeforeGuess = this.gameOver()
     if (!this.letterPicked(x) && isLetter(x) && !this.gameOver()) {
       this.guesses.push(x);
     }
-    if (this.won() && this.inProgress) {
+    if (this.won() && !gameOverBeforeGuess) {
       this.wins += 1
       this.inProgress = false
-    } else if (this.lost() && this.inProgress) {
+    } else if (this.lost() && !gameOverBeforeGuess) {
       this.losses += 1
       this.inProgress = false
     }
@@ -69,7 +69,6 @@ function Game(wordChoices, maxGuesses) {
       this.maxGuesses = maxGuesses
     }
     this.guesses = []
-    this.inProgress = true
   }
 
   this.won = function () {
