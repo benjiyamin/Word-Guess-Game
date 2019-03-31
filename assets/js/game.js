@@ -19,10 +19,8 @@ function Game(wordChoices, maxGuesses) {
     }
     if (this.won() && !gameOverBeforeGuess) {
       this.wins += 1
-      this.inProgress = false
     } else if (this.lost() && !gameOverBeforeGuess) {
       this.losses += 1
-      this.inProgress = false
     }
   }
 
